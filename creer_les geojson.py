@@ -7,7 +7,7 @@ import pandas.io.sql as sqlio
 import sqlalchemy
 import ast
 NOM_FICHIER = "pnr_geojsons.csv"
-NOM_DOSSIER = "pn_villes"
+NOM_DOSSIER = "departements_epci"
 #geojson_df = pd.read_csv(NOM_FICHIER)
 
 def chargerIdentifiants(fichier="identifiants_azure.json"):
@@ -61,14 +61,14 @@ def creerConnectionOAD(fichier="identifiants_azure.json"):
     )
     return engine.connect()
 
-geo_query = "SELECT * FROM dbt_territoires.pnr_geometries"
+geo_query = "SELECT * FROM dbt_territoires.departements_epci_geometries"
 geojson_df = query(geo_query, sql_params={"dtypes": {"code_departement": sqlalchemy.types.String, "geojson": sqlalchemy.types.JSON}})
 geojson_df["geojson"] = geojson_df["geojson"].apply(lambda x: str(x))
 
 print("")
 for index, row in geojson_df.iterrows():
     geojson = row["geojson"]
-    nom_fichier_geojson = row["code_territoire"]
+    nom_fichier_geojson = row["code_departement"]
     geojson = ast.literal_eval(row["geojson"])
     print(nom_fichier_geojson)
 
