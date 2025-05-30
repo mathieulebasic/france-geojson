@@ -72,4 +72,4 @@ def create_all_geojson_files(geojson_level):
         print(f"GeoJSON files for {territoire_type} created successfully.")
 
 if __name__ == "__main__":
-    create_all_geojson_files('epci')
+    create_all_geojson_files('iris')
